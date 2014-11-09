@@ -22,10 +22,15 @@ module Unrar
       end
     end
 
-    def extract filename, *filenames
-      `#{Archive.unrar} -y x #{self.file} #{filename} #{filenames.join(" ")} #{tmpdir}/`
+    def extract(*filenames)
+      rar_path = file.respond_to?(:path) ? file.path : file
+      cmd = "#{Archive.unrar} -y x #{rar_path} #{filenames.join(" ")} #{tmpdir}/"
 
-      Dir["#{tmpdir}/**/*"].to_ary
+      if system(cmd)
+        Dir["#{tmpdir}/**/*"].to_ary
+      else
+        false
+      end
     end
 
     def list
