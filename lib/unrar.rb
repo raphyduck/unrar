@@ -36,6 +36,7 @@ module Unrar
       end
       return items
     end
+
     def self.unrar
       @@unrar ||= search_for "unrar"
     end
