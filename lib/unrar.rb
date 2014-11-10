@@ -23,7 +23,6 @@ module Unrar
     end
 
     def extract(*filenames)
-      rar_path = file.respond_to?(:path) ? file.path : file
       cmd = "#{Archive.unrar} -y x #{rar_path} #{filenames.join(" ")} #{tmpdir}/"
 
       if system(cmd)
@@ -35,15 +34,21 @@ module Unrar
 
     def list
       items = []
-      cmdoutput = `#{Archive.unrar} lb #{self.file}`
+
+      cmdoutput = `#{Archive.unrar} lb #{rar_path}`
       cmdoutput.each_line do |line|
-        items << line
+        items << line.strip
       end
-      return items
+
+      items
     end
 
     def self.unrar
       @@unrar ||= search_for "unrar"
+    end
+
+    def rar_path
+      @rar_path ||= file.respond_to?(:path) ? file.path : file
     end
 
     private
