@@ -5,7 +5,7 @@ Gem::Specification.new do |gem|
   gem.authors       = ["JR Boyens"]
   gem.email         = ["jr.boyens@chacha.com"]
   gem.description   = 'Unrar gem with fixed description'
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.summary       = 'Unrar gem summary'
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($\)
