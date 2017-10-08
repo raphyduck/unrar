@@ -23,7 +23,7 @@ module Unrar
     end
 
     def extract(*filenames)
-      cmd = "#{Archive.unrar} -y -inul x #{rar_path} #{filenames.join(" ")} #{tmpdir}/"
+      cmd = "#{Archive.unrar} -y x #{rar_path} #{filenames.join(" ")} #{tmpdir}/"
 
       if system(cmd)
         Dir["#{tmpdir}/**/*"].to_ary
