@@ -48,7 +48,7 @@ module Unrar
     end
 
     def rar_path
-      @rar_path ||= file.respond_to?(:path) ? file.path : file
+      @rar_path ||= file.respond_to?(:path) ? file.path : file.gsub("'","\'").gsub("\"",'\"')
     end
 
     private
