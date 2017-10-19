@@ -8,9 +8,9 @@ module Unrar
 
     attr_accessor :file, :tmpdir
 
-    def initialize(file)
+    def initialize(file, destination = nil)
       self.file = file
-      self.tmpdir = Dir.mktmpdir
+      self.tmpdir = destination || Dir.mktmpdir
 
       # shitty clean up; fix this
       at_exit {
@@ -23,7 +23,7 @@ module Unrar
     end
 
     def extract(*filenames)
-      cmd = "#{Archive.unrar} -y x #{rar_path} #{filenames.join(" ")} #{tmpdir}/"
+      cmd = "#{Archive.unrar} -y x '#{rar_path}' #{filenames.join(" ")} #{tmpdir}/"
 
       if system(cmd)
         Dir["#{tmpdir}/**/*"].to_ary
@@ -34,8 +34,7 @@ module Unrar
 
     def list
       items = []
-
-      cmdoutput = `#{Archive.unrar} lb #{rar_path}`
+      cmdoutput = `#{Archive.unrar} l '#{rar_path}'`
       cmdoutput.each_line do |line|
         items << line.strip
       end
@@ -48,7 +47,7 @@ module Unrar
     end
 
     def rar_path
-      @rar_path ||= file.respond_to?(:path) ? file.path : file.gsub("'","\'").gsub("\"",'\"')
+      @rar_path ||= file.respond_to?(:path) ? file.path : file
     end
 
     private
