@@ -14,7 +14,7 @@ module Unrar
 
       # shitty clean up; fix this
       at_exit {
-        FileUtils.rm_rf self.tmpdir
+        FileUtils.rm_rf self.tmpdir if destination.nil?
       }
 
       unless File.readable? file
