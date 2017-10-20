@@ -26,7 +26,7 @@ module Unrar
       cmd = "#{Archive.unrar} -y x '#{rar_path}' #{filenames.join(" ")} '#{tmpdir}'/"
 
       if system(cmd)
-        Dir["#{tmpdir}/**/*"].to_ary
+        true
       else
         false
       end
